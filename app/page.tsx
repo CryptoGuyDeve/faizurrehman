@@ -6,10 +6,15 @@ import { Sparkles, Layers, User, Rocket } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Projects from "@/components/projects";
 import { Spotlight } from "@/components/ui/spotlight";
+import DownCard from "@/components/downcard";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen w-full bg-white text-black dark:bg-black dark:text-white scroll-smooth overflow-hidden">
+    <div
+      className="relative min-h-screen w-full bg-[#09090B] text-white
+ scroll-smooth overflow-hidden"
+    >
       {/* ===================== FULL-PAGE SPOTLIGHT ===================== */}
       <Spotlight
         className="
@@ -155,6 +160,10 @@ export default function Home() {
     "
         >
           <Projects />
+          <div className="mt-10">
+            <DownCard />
+            <Footer />
+          </div>
         </div>
       </section>
 
