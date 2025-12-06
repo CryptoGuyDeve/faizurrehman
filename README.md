@@ -79,7 +79,7 @@ To deploy, simply push to your GitHub repository and import the project into **V
 **Faizur Rehman**
 
 -   **Github**: [@CryptoGuyDeve](https://github.com/CryptoGuyDeve)
--   **Twitter/X**: [@StandardGag](https://x.com/StandardGag)
+-   **Twitter/X**: [@Faiz_Rrhman](https://x.com/Faiz_Rrhman)
 -   **Website**: [https://faizurrehman.vercel.app](https://faizurrehman.vercel.app)
 
 ---
