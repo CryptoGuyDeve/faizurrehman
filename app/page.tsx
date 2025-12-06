@@ -1,181 +1,142 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
-import { ModeToggle } from "@/components/mode-toggle";
+import { motion } from "framer-motion";
 import { Sparkles, Layers, User, Rocket } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import Projects from "@/components/projects";
 import { Spotlight } from "@/components/ui/spotlight";
+import { Separator } from "@/components/ui/separator";
+import Projects from "@/components/projects";
 import DownCard from "@/components/downcard";
 import Footer from "@/components/footer";
 
+// Animation variants for staggered entrance
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
+
 export default function Home() {
   return (
-    <div
-      className="relative min-h-screen w-full bg-[#09090B] text-white
- scroll-smooth overflow-hidden"
-    >
-      {/* ===================== FULL-PAGE SPOTLIGHT ===================== */}
-      <Spotlight
-        className="
-          absolute top-0 left-0
-          w-[200%] h-[200%]
-          md:w-[140%] md:h-[160%]
-          opacity-70 dark:opacity-35
-          pointer-events-none
-          z-1
-          spotlight-animate
-        "
-        fill="white"
-      />
-      {/* 
-      <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-40">
-        <ModeToggle />
-      </div> */}
-
-      {/* ===================== HERO ===================== */}
-      <section className="relative min-h-[65vh] sm:min-h-[70vh] flex items-center justify-center pt-4 sm:pt-8">
-        {/* Glow Circle */}
-        <div
-          className="absolute w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] 
-          rounded-full bg-black/10 dark:bg-white/10 blur-3xl opacity-30 z-2"
+    <div className="relative min-h-screen w-full bg-[#050505] text-white selection:bg-white/20 overflow-x-hidden">
+      
+      {/* --- Ambient Background --- */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Spotlight
+          className="-top-40 left-0 md:left-60 md:-top-20 z-10"
+          fill="rgba(255, 255, 255, 0.08)"
         />
+        <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-white/[0.03] to-transparent" />
+      </div>
 
-        {/* Content Wrapper */}
-        <div
-          className="relative z-30 flex flex-col items-center justify-center
-                      -translate-y-[10%] sm:-translate-y-[18%]
-                      w-full px-4 sm:px-6"
+      <main className="relative z-10 max-w-2xl mx-auto px-6 py-20 md:py-32">
+        
+        {/* --- Hero Section --- */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-start gap-8"
         >
-          <div className="max-w-xl w-full">
-            {/* Separator */}
-            <div className="flex items-center justify-center mb-4 sm:mb-6">
-              <Separator
-                orientation="vertical"
-                className="
-                  h-28 sm:h-48
-                  bg-black/60 dark:bg-white/70
-                  w-[3px] rounded-full
-                  backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.4)]
-                "
-              />
+          {/* Status Badge */}
+          <motion.div variants={itemVariants} className="relative">
+            <div className="absolute inset-0 bg-white/20 blur-xl rounded-full opacity-20" />
+            <div className="
+              relative inline-flex items-center gap-2 px-3 py-1.5 
+              rounded-full bg-white/5 border border-white/10 
+              text-xs font-medium text-white/80
+              backdrop-blur-md shadow-sm
+            ">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              Available for new projects
             </div>
+          </motion.div>
 
-            {/* TEXT BLOCK */}
-            <div className="space-y-4 sm:space-y-6 text-left relative z-40">
-              {/* ⭐ FULL UPGRADED AVATAR ⭐ */}
-              <div className="flex items-center gap-3 mb-1 sm:mb-2 -translate-y-[5%] sm:-translate-y-[8%]">
-                <div
-                  className="
-                  relative h-12 w-12 sm:h-14 sm:w-14 rounded-full overflow-hidden
-                  shadow-lg border border-white/20 dark:border-white/10
-                  transition-transform duration-300 hover:scale-110
-                "
-                >
-                  {/* Neon Glow Ring */}
-                  <div
-                    className="
-                    absolute inset-0 rounded-full 
-                    ring-2 ring-white/30 dark:ring-white/20
-                    shadow-[0_0_20px_rgba(255,255,255,0.45)]
-                    pointer-events-none
-                  "
-                  />
-
-                  {/* Rotating Shine */}
-                  <div
-                    className="
-                    absolute inset-0 rounded-full 
-                    bg-gradient-to-tr from-transparent via-white/20 to-transparent
-                    animate-shine pointer-events-none
-                  "
-                  />
-
-                  <Avatar className="h-full w-full rounded-full overflow-hidden">
-                    <AvatarImage
-                      src="/crypto.jpg"
-                      alt="avatar"
-                      className="object-cover scale-110"
-                    />
-                    <AvatarFallback>CR</AvatarFallback>
-                  </Avatar>
-                </div>
-              </div>
-
-              {/* Heading */}
-              <h1 className="text-2xl sm:text-3xl font-bold italic leading-tight tracking-tight flex items-start gap-2">
-                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6" />
-                I build UI Design projects
-                <br className="hidden sm:block" />
-                _that improve my workflow and save my time
+          {/* Intro / Avatar Block */}
+          <motion.div 
+            variants={itemVariants} 
+            className="flex flex-col-reverse sm:flex-row items-start sm:items-center gap-6 w-full"
+          >
+            <div className="flex-1 space-y-2">
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white/95">
+                faizurrehman
               </h1>
-
-              {/* Subtext */}
-              <p className="text-base sm:text-lg font-medium italic text-black/70 dark:text-white/80 flex items-center gap-2">
-                <Layers className="h-4 w-4 sm:h-5 sm:w-5" />
-                Components, systems & tools built for creators.
+              <p className="text-lg text-white/60 font-medium">
+                Full-Stack Developer & UI Designer
               </p>
-
-              {/* Intro */}
-              <p className="text-sm sm:text-base italic text-black/60 dark:text-white/60 flex flex-col gap-1">
-                <span className="flex items-center gap-2">
-                  <User className="h-4 w-4 sm:h-5 sm:w-5" />
-                  I'm <span className="font-bold">faizurrehman</span>, also
-                  known as <span className="font-bold">crypto</span>.
-                </span>
-
-                <span className="flex items-center gap-2">
-                  <Rocket className="h-4 w-4 sm:h-5 sm:w-5" />
-                  Frontend engineer, UI designer & emerging creator from
-                  Pakistan always building, always experimenting.
-                </span>
-              </p>
-
-              {/* Projects Label */}
-              <div className="mt-4 sm:mt-6">
-                <span className="text-lg sm:text-xl font-bold italic">
-                  Projects
-                </span>
-                <Separator className="mt-2 sm:mt-3 bg-black/20 dark:bg-white/20" />
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
+            
+            <div className="relative flex-shrink-0">
+               {/* Glow effect behind avatar */}
+               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 blur-2xl rounded-full" />
+               <div className="relative p-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-sm">
+                 <Avatar className="h-20 w-20 sm:h-24 sm:w-24 border border-white/5">
+                    <AvatarImage src="/crypto.jpg" alt="faizurrehman" className="object-cover" />
+                    <AvatarFallback className="text-black bg-white">FR</AvatarFallback>
+                 </Avatar>
+               </div>
+            </div>
+          </motion.div>
 
-      {/* ===================== PROJECTS SECTION ===================== */}
-      <section
-        id="projects"
-        className="relative w-full flex items-start justify-center bg-transparent"
-      >
-        <div
-          className="
-      w-full 
-      max-w-xl 
-      -mt-[12%]   /* ⬅️ Pull projects much closer to the separator */
-      sm:-mt-[10%]
-      z-30 
-      px-4
-    "
-        >
-          <Projects />
-          <div className="mt-10">
+          {/* Bio Description */}
+          <motion.div variants={itemVariants} className="space-y-4 text-base sm:text-lg text-white/70 leading-relaxed max-w-xl">
+            <p>
+              I build <span className="text-white font-semibold">pixel-perfect</span> interfaces 
+              and craft digital experiences that are fast, accessible, and visually stunning.
+            </p>
+            <p>
+              Merging technical depth with creative design to create 
+              software that feels <span className="italic text-white/90">alive</span>.
+            </p>
+          </motion.div>
+          
+          {/* Social / Connect (Optional placeholder or small links could go here) */}
+          
+          {/* Divider */}
+          <motion.div variants={itemVariants} className="w-full pt-8 pb-4">
+            <Separator className="bg-white/10" />
+          </motion.div>
+
+          {/* --- Projects Section --- */}
+          <motion.div variants={itemVariants} className="w-full space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-white/90 flex items-center gap-2">
+                <Layers className="h-5 w-5 text-white/50" />
+                Selected Projects
+              </h2>
+              {/* Optional 'View All' Link could go here */}
+            </div>
+            
+            <Projects />
+          </motion.div>
+          
+          <motion.div variants={itemVariants} className="w-full pt-10">
             <DownCard />
-            <Footer />
-          </div>
-        </div>
-      </section>
+          </motion.div>
 
-      {/* Avatar shine animation keyframes */}
-      <style>{`
-        @keyframes shine {
-          0% { transform: translateX(-100%) rotate(45deg); }
-          100% { transform: translateX(150%) rotate(45deg); }
-        }
-        .animate-shine {
-          animation: shine 2.5s linear infinite;
-        }
-      `}</style>
+          <motion.div variants={itemVariants} className="w-full pt-6">
+            <Footer />
+          </motion.div>
+
+        </motion.div>
+      </main>
     </div>
   );
 }

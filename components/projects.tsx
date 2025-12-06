@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 const Projects = () => {
@@ -61,9 +60,9 @@ const Projects = () => {
   ];
 
   return (
-    <div className="w-full max-w-xl mx-auto mt-4 px-0">
+    <div className="w-full">
       <motion.ul
-        className="flex flex-col gap-4"
+        className="grid grid-cols-1 gap-4"
         initial="hidden"
         animate="show"
         variants={{
@@ -71,7 +70,8 @@ const Projects = () => {
         }}
       >
         {projectList.map((p, i) => {
-          const favicon = `${p.url.replace(/\/$/, "")}/favicon.ico`;
+          // Use Google's favicon service which provides a fallback and is more reliable than direct /favicon.ico
+          const favicon = `https://www.google.com/s2/favicons?sz=128&domain_url=${p.url}`;
 
           return (
             <motion.li
@@ -81,68 +81,48 @@ const Projects = () => {
                 show: { opacity: 1, y: 0 },
               }}
               whileHover={{
-                scale: 1.025,
-                backgroundColor: "rgba(255,255,255,0.04)",
+                scale: 1.01,
+                backgroundColor: "rgba(255,255,255,0.03)",
               }}
-              transition={{ type: "spring", stiffness: 200, damping: 18 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              onClick={() => window.open(p.url, "_blank")}
               className="
                 group flex items-start gap-4 w-full p-4
                 rounded-xl cursor-pointer
                 border border-white/5 
-                backdrop-blur-sm
-                transition-all duration-300
-                hover:border-white/20
-                hover:shadow-[0_0_25px_rgba(255,255,255,0.10)]
+                bg-white/[0.01]
+                transition-colors duration-300
+                hover:border-white/10
               "
             >
-              {/* Animated Glow Border on Hover */}
-              <motion.div
-                className="
-                  absolute inset-0 rounded-xl pointer-events-none
-                "
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-
               {/* Favicon */}
-              <motion.div
-                whileHover={{ rotate: 8 }}
-                transition={{ type: "spring", stiffness: 150 }}
+              <div
                 className="
-                  flex-shrink-0 relative h-10 w-10 rounded-md 
-                  overflow-hidden bg-black/10 dark:bg-white/10 shadow-sm
+                  flex-shrink-0 relative h-10 w-10 rounded-lg 
+                  overflow-hidden bg-white/5 shadow-inner border border-white/5
                 "
               >
-                <Image
+                {/* using standard img to avoid next/image domain config issues and strict 404 handling */}
+                <img
                   src={favicon}
                   alt={p.title}
-                  fill
-                  sizes="40px"
-                  className="object-cover"
+                  className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                 />
-              </motion.div>
+              </div>
 
               {/* Text Content */}
-              <div className="min-w-0">
-                <div className="flex items-center gap-3">
-                  <h3
-                    className="
-                      text-sm font-semibold truncate 
-                      text-white
-                    "
-                  >
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="text-sm font-medium text-white/90 group-hover:text-white transition-colors">
                     {p.title}
                   </h3>
-
-                  <span className="text-sm text-white/30">•</span>
-
-                  <span className="text-sm text-white/50">
+                  <span className="text-xs text-white/40 tabular-nums">
                     {p.date}
                   </span>
                 </div>
 
-                <p className="mt-1 text-sm text-white/60 leading-relaxed">
+                <p className="mt-1 text-sm text-white/50 line-clamp-2 leading-relaxed group-hover:text-white/70 transition-colors">
                   {p.description}
                 </p>
               </div>
