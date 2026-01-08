@@ -30,7 +30,7 @@ const Footer = () => {
         </div>
 
         <p className="text-sm md:text-base leading-relaxed text-white/70 max-w-2xl">
-          I'm <b>Faizurrehman</b>, a 16-year-old developer obsessed with quality.
+          I&apos;m <b>FaizBuildsStuff</b>, a 16-year-old developer obsessed with quality.
           Building tools like <span className="text-white/90">Sward</span> and <span className="text-white/90">ClingAI</span> to push the web forward.
           I combine clean code with fluid motion to create software that feels effortless.
         </p>
@@ -47,7 +47,7 @@ const Footer = () => {
       >
         {/* COPYRIGHT */}
         <p className="text-xs text-white/40 font-medium">
-          © 2030 Faizur Rehman. All rights reserved.
+          © 2030 FaizBuildsStuff. All rights reserved.
         </p>
 
         {/* SOCIAL ICONS */}

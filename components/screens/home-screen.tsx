@@ -66,6 +66,37 @@ export function HomeScreen({ tweet }: HomeScreenProps) {
                 >
                     {/* --- Profile Card Section --- */}
                     <motion.div variants={itemVariants} className="w-full relative group">
+
+                        {/* Hero Decorative Lines (Left) */}
+                        <div className="absolute -left-12 lg:-left-24 top-0 bottom-0 hidden md:flex gap-3 items-start pointer-events-none">
+                            {[40, 140, 80, 180, 60].map((h, i) => (
+                                <motion.div
+                                    key={`left-${i}`}
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: h, opacity: 1 }}
+                                    transition={{ duration: 1.5, delay: 0.5 + (i * 0.1), ease: [0.22, 1, 0.36, 1] }}
+                                    className="w-[1px] bg-gradient-to-b from-white/20 via-white/10 to-transparent relative"
+                                >
+                                    <div className="absolute inset-0 bg-white/10 blur-[2px]" />
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Hero Decorative Lines (Right) */}
+                        <div className="absolute -right-12 lg:-right-24 top-0 bottom-0 hidden md:flex gap-3 items-start justify-end pointer-events-none">
+                            {[160, 60, 120, 40, 90].map((h, i) => (
+                                <motion.div
+                                    key={`right-${i}`}
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: h, opacity: 1 }}
+                                    transition={{ duration: 1.5, delay: 0.7 + (i * 0.1), ease: [0.22, 1, 0.36, 1] }}
+                                    className="w-[1px] bg-gradient-to-b from-white/20 via-white/10 to-transparent relative"
+                                >
+                                    <div className="absolute inset-0 bg-white/10 blur-[2px]" />
+                                </motion.div>
+                            ))}
+                        </div>
+
                         {/* Banner */}
                         <div className="relative w-full h-40 md:h-48 rounded-[20px] overflow-hidden mb-[-60px] md:mb-[-70px] border border-white/5 shadow-2xl transition-all duration-700 hover:shadow-[0_0_40px_rgba(255,255,255,0.05)]">
                             <img
@@ -106,11 +137,16 @@ export function HomeScreen({ tweet }: HomeScreenProps) {
                             <div className="mt-6 flex flex-col gap-4">
                                 <div>
                                     <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-2">
-                                        Faizur Rehman
+                                        FaizBuildsStuff
                                     </h1>
-                                    <p className="text-base md:text-lg text-white/50 font-medium tracking-tight">
-                                        Full-Stack Developer & UI Designer
-                                    </p>
+                                    <div className="flex flex-col gap-1">
+                                        <p className="text-sm font-mono text-emerald-400/80 uppercase tracking-widest">
+                                            Faizur Rehman
+                                        </p>
+                                        <p className="text-base md:text-lg text-white/50 font-medium tracking-tight">
+                                            Full-Stack Developer & UI Designer
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-lg tracking-tight font-light">

@@ -12,51 +12,75 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FaizurRehman — Developer & UI Designer",
+  metadataBase: new URL("https://faizurrehman.vercel.app"),
+  title: "FaizBuildsStuff | Faizur Rehman - Full Stack Developer",
   description:
-    "Portfolio of FaizurRehman (crypto). Frontend engineer and UI designer crafting modern interfaces, design systems, and high-performance digital experiences.",
+    "FaizBuildsStuff (Faizur Rehman). Frontend engineer and UI designer building premium digital experiences, unique web apps, and design systems.",
 
-  // Optional but recommended SEO upgrades:
   keywords: [
-    "FaizurRehman",
-    "crypto",
-    "frontend developer",
-    "UI designer",
-    "design systems",
-    "Next.js developer",
-    "React developer",
-    "Pakistan developer",
-    "modern UI",
+    "FaizBuildsStuff",
+    "Faizur Rehman",
+    "frontend engineer",
+    "software engineer",
+    "creative developer",
+    "Next.js",
+    "Tailwind CSS",
+    "React",
+    "TypeScript",
     "portfolio"
   ],
 
-  authors: [{ name: "FaizurRehman" }],
+  authors: [{ name: "Faizur Rehman", url: "https://faizurrehman.vercel.app" }],
 
   openGraph: {
-    title: "FaizurRehman — Developer & UI Designer",
-    description:
-      "Building modern UI systems, premium web experiences, and fast frontend workflows.",
-    siteName: "FaizurRehman",
+    title: "FaizBuildsStuff | Full Stack Developer",
+    description: "Building premium digital experiences and design systems.",
+    siteName: "FaizBuildsStuff",
+    locale: "en_US",
     type: "website",
+    url: "https://faizurrehman.vercel.app",
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "FaizurRehman — Developer & UI Designer",
-    description:
-      "Crafting modern UI, design systems, and premium web experiences.",
+    title: "FaizBuildsStuff",
+    description: "Building premium digital experiences and design systems.",
+    creator: "@Faiz_Rrhman",
+  },
+
+  icons: {
+    icon: "/favicon.ico",
   },
 };
-
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Faizur Rehman",
+    "alternateName": "FaizBuildsStuff",
+    "url": "https://faizurrehman.vercel.app",
+    "jobTitle": "Full Stack Developer",
+    "sameAs": [
+      "https://github.com/CryptoGuyDeve",
+      "https://x.com/Faiz_Rrhman",
+      "https://www.linkedin.com/in/faizurrehman"
+    ],
+    "description": "Frontend engineer and UI designer building premium digital experiences."
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${robotoMono.variable} antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

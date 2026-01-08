@@ -1,4 +1,4 @@
-# Faizur Rehman
+# FaizBuildsStuff (Faizur Rehman)
 
 **Full-Stack Developer & UI Specialist**
 
