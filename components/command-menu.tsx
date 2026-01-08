@@ -128,7 +128,7 @@ export const CommandMenu = () => {
                                         <Mail className="mr-3 h-4 w-4 text-white/50" />
                                         <span>Copy Email</span>
                                         <div className="ml-auto flex items-center gap-2">
-                                            <span className="text-[10px] text-white/30 font-mono hidden group-hover:block transition-all">faizurrehman00000@gmail.com</span>
+                                            <span className="text-[10px] text-white/30 font-mono hidden group-hover:block transition-all">m.faizurrehman.crypto@gmail.com</span>
                                             <Shortcut>↵</Shortcut>
                                         </div>
                                     </CommandItem>
