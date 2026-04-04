@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { CommandMenu } from "@/components/command-menu";
 import { CommandHint } from "@/components/command-hint";
 
-// Replace Geist with Roboto Mono
 const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
   subsets: ["latin"],
@@ -76,7 +76,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${robotoMono.variable} antialiased`}>
+      <body className={`${robotoMono.variable} antialiased selection:bg-emerald-500/30 selection:text-emerald-200`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -87,6 +87,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           {children}
           <CommandMenu />
           <CommandHint />

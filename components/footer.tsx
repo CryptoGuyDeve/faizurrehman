@@ -5,7 +5,11 @@ import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import { Github, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
 
-const Footer = () => {
+interface FooterProps {
+  showBio?: boolean;
+}
+
+const Footer = ({ showBio = true }: FooterProps) => {
   const socialLinks = [
     { icon: Github, url: "https://github.com/FaizBuildsStuff" },
     { icon: Twitter, url: "https://x.com/FaizBuildsStuff" },
@@ -17,26 +21,28 @@ const Footer = () => {
     <footer className="w-full mt-10 text-white/60">
 
       {/* ================= BIO SECTION ================= */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className="w-full"
-      >
-        <div className="flex items-center gap-4 mb-6">
-          <span className="text-xs font-bold tracking-widest uppercase text-white/40">About Me</span>
-          <div className="h-px flex-1 bg-white/5"></div>
-        </div>
+      {showBio && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="w-full"
+        >
+          <div className="flex items-center gap-4 mb-6">
+            <span className="text-xs font-bold tracking-widest uppercase text-white/40">About Me</span>
+            <div className="h-px flex-1 bg-white/5"></div>
+          </div>
 
-        <p className="text-sm md:text-base leading-relaxed text-white/70 max-w-2xl">
-          I&apos;m <b>FaizBuildsStuff</b>, a 16-year-old developer obsessed with quality.
-          Building tools like <span className="text-white/90">Sward</span> and <span className="text-white/90">ClingAI</span> to push the web forward.
-          I combine clean code with fluid motion to create software that feels effortless.
-        </p>
+          <p className="text-sm md:text-base leading-relaxed text-white/70 max-w-2xl">
+            I&apos;m <b>FaizBuildsStuff</b>, a 16-year-old developer obsessed with quality.
+            Building tools like <span className="text-white/90">Sward</span> and <span className="text-white/90">ClingAI</span> to push the web forward.
+            I combine clean code with fluid motion to create software that feels effortless.
+          </p>
 
-        <div className="h-px w-full bg-white/5 my-8"></div>
-      </motion.div>
+          <div className="h-px w-full bg-white/5 my-8"></div>
+        </motion.div>
+      )}
 
       {/* ================= FOOTER BOTTOM SECTION ================= */}
       <motion.div

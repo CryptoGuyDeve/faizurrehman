@@ -3,12 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { Command } from "cmdk";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 import {
     Layers,
-    User,
     LayoutGrid,
-    Phone,
     Twitter,
     Github,
     Linkedin,
@@ -19,7 +16,6 @@ import {
 
 export const CommandMenu = () => {
     const [open, setOpen] = useState(false);
-    const router = useRouter();
 
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
@@ -35,11 +31,6 @@ export const CommandMenu = () => {
 
     const openLink = (url: string) => {
         window.open(url, "_blank");
-        setOpen(false);
-    };
-
-    const navigate = (href: string) => {
-        router.push(href);
         setOpen(false);
     };
 
@@ -86,25 +77,15 @@ export const CommandMenu = () => {
                                     Navigation
                                 </div>
                                 <Command.Group>
-                                    <CommandItem onSelect={() => navigate("/")}>
+                                    <CommandItem onSelect={() => setOpen(false)}>
                                         <Layers className="mr-3 h-4 w-4 text-white/50" />
                                         <span>Home</span>
                                         <Shortcut>H</Shortcut>
                                     </CommandItem>
-                                    <CommandItem onSelect={() => navigate("/about")}>
-                                        <User className="mr-3 h-4 w-4 text-white/50" />
-                                        <span>About</span>
-                                        <Shortcut>A</Shortcut>
-                                    </CommandItem>
-                                    <CommandItem onSelect={() => navigate("/projects")}>
+                                    <CommandItem onSelect={() => setOpen(false)}>
                                         <LayoutGrid className="mr-3 h-4 w-4 text-white/50" />
                                         <span>Projects</span>
                                         <Shortcut>P</Shortcut>
-                                    </CommandItem>
-                                    <CommandItem onSelect={() => navigate("/contact")}>
-                                        <Phone className="mr-3 h-4 w-4 text-white/50" />
-                                        <span>Contact</span>
-                                        <Shortcut>C</Shortcut>
                                     </CommandItem>
                                 </Command.Group>
 
