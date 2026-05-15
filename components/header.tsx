@@ -68,14 +68,14 @@ export default function Header() {
     return (
         <header
             className={cn(
-                "fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-full max-w-fit px-4",
-                isVisible ? "translate-y-0 opacity-100" : "-translate-y-24 opacity-0"
-            )}
+    "fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[calc(100%-20px)] sm:w-full max-w-[95vw] sm:max-w-fit px-0 sm:px-4",
+    isVisible ? "translate-y-0 opacity-100" : "-translate-y-24 opacity-0"
+)}
         >
             <div 
                 ref={navRef}
                 className={cn(
-                    "flex items-center gap-2 p-1.5 rounded-full border transition-all duration-500",
+    "flex items-center justify-between w-full md:w-auto gap-2 p-1.5 rounded-full border transition-all duration-500",
                     isScrolled 
                         ? "bg-black/80 backdrop-blur-xl border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]" 
                         : "bg-white/5 backdrop-blur-md border-white/5"
@@ -139,37 +139,114 @@ export default function Header() {
             </div>
 
             {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: -20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                        className="absolute top-full mt-4 left-0 right-0 p-2 bg-black/90 backdrop-blur-2xl border border-white/10 rounded-3xl md:hidden overflow-hidden"
-                    >
-                        <div className="flex flex-col gap-1">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="flex items-center justify-between px-6 py-4 rounded-2xl hover:bg-white/5 text-lg font-bold text-white/50 hover:text-white transition-all group"
-                                >
-                                    {link.name}
-                                    <ArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
-                                </Link>
-                            ))}
-                            <Link
-                                href="/pricing"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="bg-emerald-500 m-2 p-5 rounded-2xl text-center font-black text-black text-lg hover:bg-emerald-400 transition-colors"
-                            >
-                                START BUILDING
-                            </Link>
+<AnimatePresence>
+    {isMobileMenuOpen && (
+        <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.96 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="absolute left-0 right-0 top-full mt-3 overflow-hidden rounded-[32px] border border-white/10 bg-black/90 p-3 shadow-[0_20px_80px_rgba(0,0,0,0.6)] backdrop-blur-3xl md:hidden"
+        >
+            {/* Ambient Background */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute left-1/2 top-0 h-[240px] w-[240px] -translate-x-1/2 rounded-full bg-white/[0.04] blur-3xl" />
+
+                <div className="absolute right-[-20%] bottom-[-20%] h-[180px] w-[180px] rounded-full bg-emerald-500/[0.08] blur-3xl" />
+            </div>
+
+            <div className="relative z-10">
+
+                {/* Top Card */}
+                <div className="relative overflow-hidden rounded-[26px] border border-white/5 bg-white/[0.03] p-5">
+
+                    {/* Reflection */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent" />
+
+                    <div className="relative z-10">
+
+                        <div className="flex items-center gap-2">
+                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/35">
+                                Personal Brand
+                            </span>
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+
+                        <h3 className="mt-4 text-[32px] font-[720] leading-[0.9] tracking-[-0.09em] text-white">
+                            Faiz
+
+                            <span className="block font-serif font-light italic text-white/55">
+                                BuildsStuff
+                            </span>
+                        </h3>
+
+                        <p className="mt-4 max-w-[240px] text-[13px] leading-[1.7] text-white/35">
+                            Modern web experiences, cinematic interfaces, and powerful development for startups and creators.
+                        </p>
+
+                    </div>
+                </div>
+
+                {/* Navigation Links */}
+                <div className="mt-3 flex flex-col gap-2">
+
+                    {navLinks.map((link) => {
+                        const isActive = pathname === link.href;
+
+                        return (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className={cn(
+                                    "group relative flex items-center justify-between overflow-hidden rounded-[22px] border px-5 py-4 transition-all duration-300",
+                                    isActive
+                                        ? "border-white/10 bg-white/[0.06] text-white"
+                                        : "border-transparent bg-transparent text-white/45 hover:border-white/10 hover:bg-white/[0.04] hover:text-white"
+                                )}
+                            >
+                                {/* Hover Glow */}
+                                <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent" />
+                                </div>
+
+                                <span className="relative z-10 text-[15px] font-semibold tracking-[-0.03em]">
+                                    {link.name}
+                                </span>
+
+                                <ArrowRight className="relative z-10 h-4 w-4 translate-x-[-4px] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                            </Link>
+                        );
+                    })}
+
+                </div>
+
+                {/* CTA */}
+                <Link
+                    href="/pricing"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="group relative mt-3 flex h-[58px] items-center justify-center overflow-hidden rounded-[22px] bg-emerald-500 text-sm font-black tracking-[0.08em] text-black transition-all duration-300 hover:bg-emerald-400"
+                >
+                    {/* Shine */}
+                    <div className="absolute top-0 left-[-120%] h-full w-[120px] rotate-12 bg-gradient-to-r from-transparent via-white/40 to-transparent transition-all duration-1000 group-hover:left-[140%]" />
+
+                    {/* Glow */}
+                    <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    </div>
+
+                    <span className="relative z-10 flex items-center gap-2">
+                        START BUILDING
+
+                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                </Link>
+
+            </div>
+        </motion.div>
+    )}
+</AnimatePresence>
         </header>
     );
 }

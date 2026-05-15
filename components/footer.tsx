@@ -14,7 +14,7 @@ const Footer = ({ showBio = true }: FooterProps) => {
     { icon: Github, url: "https://github.com/FaizBuildsStuff" },
     { icon: Twitter, url: "https://x.com/FaizBuildsStuff" },
     { icon: Linkedin, url: "https://www.linkedin.com/in/faizu-rrehman-4856b4319/" },
-    { icon: Instagram, url: "https://www.instagram.com/faizbuildsstuff/" },
+    { icon: Instagram, url: "https://www.instagram.com/cryptovoid.ex/" },
   ];
 
   return (

@@ -8,11 +8,21 @@ import {
     Zap, Star, Shield, ArrowUpRight,
     Check, Sparkles, Globe, Terminal,
     Layers, Cpu, Smartphone, LayoutGrid,
-    MousePointer2, Search, Settings
+    MousePointer2, Search, Settings, Mail,
+    MessageCircle,
+    Disc3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,7 +30,7 @@ const plans = [
     {
         id: "starter",
         name: "Single Page",
-        price: "$36", 
+        price: "$36",
         description: "Perfect for early-stage founders who need a clean, fast, and professional web presence.",
         features: [
             "1 High-Converting Landing Page",
@@ -37,7 +47,7 @@ const plans = [
     {
         id: "studio",
         name: "Multi Page",
-        price: "$72", 
+        price: "$72",
         description: "For brands serious about standing out with premium design, smooth interactions, and conversion-focused structure.",
         features: [
             "Multi-Section Premium Landing Page",
@@ -56,7 +66,7 @@ const plans = [
     {
         id: "scale",
         name: "Full System",
-        price: "$110", 
+        price: "$110",
         description: "Built for serious businesses that need full-scale systems, advanced features, and long-term scalability.",
         features: [
             "Full Website / SaaS Interface Build",
@@ -110,7 +120,7 @@ function FAQItem({ faq }: { faq: typeof faqs[0] }) {
             >
                 <span className={cn(
                     "text-xl font-bold tracking-tight transition-colors",
-                    isOpen ? "text-emerald-400" : "text-white/70 group-hover:text-white"
+                    isOpen ? "text-white" : "text-white/70 group-hover:text-white"
                 )}>
                     {faq.question}
                 </span>
@@ -154,6 +164,16 @@ export default function PricingPage() {
                 });
             });
 
+            gsap.utils.toArray<HTMLElement>(".floating-card").forEach((card, i) => {
+                gsap.to(card, {
+                    y: i % 2 === 0 ? -18 : 18,
+                    duration: 4 + i,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                });
+            });
+
             // Parallax Glow
             gsap.to(".parallax-glow", {
                 yPercent: -40,
@@ -170,218 +190,901 @@ export default function PricingPage() {
     }, []);
 
     return (
-        <div ref={containerRef} className="relative min-h-screen bg-[#050505] text-white selection:bg-emerald-500/30 overflow-x-hidden">
+        <div ref={containerRef} className="relative min-h-screen bg-[#060606] text-white selection:bg-white/30 overflow-x-hidden">
             {/* Global Atmosphere */}
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className="parallax-glow absolute top-0 left-[-10%] w-[1000px] h-[1000px] bg-emerald-500/10 blur-[180px] rounded-full" />
-                <div className="parallax-glow absolute bottom-0 right-[-10%] w-[800px] h-[800px] bg-emerald-400/5 blur-[150px] rounded-full" />
-                <div className="absolute inset-0 opacity-[0.2] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+
+                {/* Main Ambient Glow */}
+                <div
+                    className="
+            absolute
+            left-1/2
+            top-[10%]
+
+            -translate-x-1/2
+
+            w-[700px]
+            h-[700px]
+
+            rounded-full
+
+            opacity-60
+
+            blur-3xl
+        "
+                    style={{
+                        background: `
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,0.10) 0%,
+                    rgba(255,255,255,0.05) 30%,
+                    rgba(255,255,255,0.02) 50%,
+                    transparent 75%
+                )
+            `,
+                    }}
+                />
+
+                {/* Secondary Glow */}
+                <div
+                    className="
+            absolute
+            right-[-10%]
+            bottom-[10%]
+
+            w-[500px]
+            h-[500px]
+
+            rounded-full
+
+            opacity-40
+
+            blur-3xl
+        "
+                    style={{
+                        background: `
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,0.06) 0%,
+                    transparent 70%
+                )
+            `,
+                    }}
+                />
+
+                {/* Noise */}
+                <div className="
+        absolute inset-0
+        opacity-[0.03]
+        mix-blend-overlay
+        bg-[url('https://grainy-gradients.vercel.app/noise.svg')]
+    " />
+
             </div>
 
             <div className="relative z-10">
-                {/* Hero Minimalist */}
-                <section className="pt-48 pb-10 px-6">
-                    <div className="max-w-[1200px] mx-auto text-left">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="inline-flex items-center gap-2 mb-10"
-                        >
-                            <Sparkles className="w-4 h-4 text-emerald-500 animate-pulse" />
-                            <span className="text-xs font-black tracking-[0.5em] uppercase text-white/40">Our Pricing</span>
-                        </motion.div>
+                {/* Hero */}
+                <section className="pt-40 md:pt-52 pb-20 px-6">
 
-                        <motion.h1
-                            initial={{ opacity: 0, y: 40 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-6xl md:text-[140px] font-black tracking-tighter mb-12 leading-[0.8] uppercase italic"
-                        >
-                            SIMPLE & <span className="text-emerald-500">FAIR.</span>
-                        </motion.h1>
+                    <div className="
+        max-w-5xl
+        mx-auto
 
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-white/30 text-2xl font-light max-w-2xl leading-relaxed italic"
-                        >
-                            High-quality design and development that helps your business grow. Pick a plan that fits your needs.
-                        </motion.p>
+        flex
+        flex-col
+        items-center
+
+        text-center
+    ">
+
+                        {/* Mini Label */}
+                        <div className="
+            mb-10
+
+            flex
+            items-center
+            gap-3
+
+            text-white/35
+        ">
+                            <div className="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-white/70
+            " />
+
+                            <span className="
+                uppercase
+                tracking-[0.28em]
+                text-[10px]
+                font-semibold
+            ">
+                                Pricing & Services
+                            </span>
+                        </div>
+
+                        {/* Heading */}
+                        <div className="relative isolate">
+
+                            {/* Ambient Glow */}
+                            <div
+                                className="
+                    absolute
+                    left-1/2
+                    top-1/2
+
+                    -translate-x-1/2
+                    -translate-y-1/2
+
+                    w-[320px]
+                    h-[320px]
+
+                    md:w-[620px]
+                    md:h-[620px]
+
+                    rounded-full
+
+                    blur-3xl
+                    opacity-70
+
+                    pointer-events-none
+                "
+                                style={{
+                                    background: `
+                        radial-gradient(
+                            circle,
+                            rgba(255,255,255,0.08) 0%,
+                            rgba(255,255,255,0.03) 40%,
+                            transparent 75%
+                        )
+                    `,
+                                }}
+                            />
+
+                            <h1
+                                className="
+                    relative
+
+                    text-[48px]
+                    sm:text-[72px]
+                    md:text-[120px]
+
+                    font-[750]
+
+                    tracking-[-0.10em]
+                    leading-[0.9]
+
+                    text-white
+                "
+                            >
+                                Premium Digital
+                                <br />
+
+                                <span className="
+                    italic
+                    font-light
+                    text-white/90
+                    font-serif
+                ">
+                                    Experiences
+                                </span>
+                            </h1>
+
+                        </div>
+
+                        {/* Description */}
+                        <p className="
+            mt-10
+
+            max-w-2xl
+
+            text-sm
+            sm:text-base
+            md:text-lg
+
+            leading-[1.8]
+
+            text-white/40
+            font-light
+        ">
+                            Strategic design and development for
+                            founders, startups, and modern brands
+                            looking to create fast, cinematic,
+                            and unforgettable digital products.
+                        </p>
+
                     </div>
+
                 </section>
 
                 {/* HORIZONTAL PRICING TIERS - LEFT TO RIGHT */}
+                {/* HORIZONTAL PRICING TIERS */}
                 <section className="px-6 py-20">
-                    <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <div
+                        className="
+            max-w-[1400px]
+            mx-auto
+
+            grid
+            grid-cols-1
+            lg:grid-cols-[1fr_1.15fr_1fr]
+
+            gap-8
+            items-stretch
+        "
+                    >
                         {plans.map((plan) => (
                             <div
                                 key={plan.id}
                                 className={cn(
-                                    "pricing-line group relative p-10 rounded-[50px] border transition-all duration-700 bg-white/5 border-white/10 hover:bg-white/[0.08] hover:border-emerald-500/20 overflow-hidden flex flex-col justify-between h-full",
-                                    plan.isPopular && "border-emerald-500/30 bg-emerald-500/[0.03]"
+                                    `
+        pricing-line
+        floating-card
+        group
+        relative
+
+        overflow-hidden
+
+        rounded-[32px]
+
+        border
+        border-white/[0.07]
+
+        bg-white/[0.025]
+
+        backdrop-blur-3xl
+
+        p-6
+        md:p-7
+
+        transition-all
+        duration-700
+
+        hover:-translate-y-1.5
+        hover:border-white/[0.14]
+
+        flex
+        flex-col
+
+        min-h-[520px]
+        `,
+                                    plan.isPopular &&
+                                    `
+        bg-white/[0.04]
+        border-white/[0.14]
+        lg:-translate-y-4
+        `
                                 )}
                             >
-                                {plan.isPopular && (
-                                    <div className="absolute top-8 right-8">
-                                        <div className="bg-emerald-500 text-black px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest italic shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                                            Most Requested
+
+                                {/* Ambient Glow */}
+                                <div
+                                    className="
+            absolute
+            inset-0
+
+            opacity-0
+            group-hover:opacity-100
+
+            transition-opacity
+            duration-700
+
+            pointer-events-none
+        "
+                                >
+                                    <div
+                                        className="
+                absolute
+                left-1/2
+                top-1/2
+
+                -translate-x-1/2
+                -translate-y-1/2
+
+                w-[260px]
+                h-[260px]
+
+                rounded-full
+
+                blur-3xl
+            "
+                                        style={{
+                                            background: `
+                    radial-gradient(
+                        circle,
+                        rgba(255,255,255,0.08) 0%,
+                        transparent 70%
+                    )
+                `,
+                                        }}
+                                    />
+                                </div>
+
+                                {/* Reflection */}
+                                <div
+                                    className="
+            absolute
+            top-0
+            left-[10%]
+
+            w-[40%]
+            h-[1px]
+
+            bg-gradient-to-r
+            from-transparent
+            via-white/30
+            to-transparent
+        "
+                                />
+
+                                {/* Top */}
+                                <div className="relative z-10">
+
+                                    {/* Badge */}
+                                    <div className="
+            flex
+            items-center
+            justify-between
+            mb-8
+        ">
+
+                                        <div
+                                            className="
+                    flex
+                    items-center
+                    justify-center
+
+                    w-11
+                    h-11
+
+                    rounded-2xl
+
+                    border
+                    border-white/[0.08]
+
+                    bg-white/[0.04]
+
+                    text-white/70
+                "
+                                        >
+                                            {plan.icon}
                                         </div>
-                                    </div>
-                                )}
 
-                                <div>
-                                    <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-white/40 group-hover:bg-emerald-500/10 group-hover:text-emerald-400 transition-all border border-white/5 mb-8">
-                                        {plan.icon}
-                                    </div>
-                                    
-                                    <h3 className="text-3xl font-black mb-1 tracking-tighter uppercase italic">{plan.name}</h3>
-                                    <div className="flex items-baseline gap-1 mb-8">
-                                        <span className="text-6xl font-black tracking-tighter">{plan.price}</span>
-                                    </div>
+                                        {plan.isPopular && (
+                                            <div
+                                                className="
+                        px-3
+                        py-1.5
 
-                                    <div className="space-y-4 mb-12">
-                                        {plan.features.map(f => (
-                                            <div key={f} className="flex items-center gap-3">
-                                                <div className="w-4 h-4 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-                                                    <Check size={8} strokeWidth={4} />
-                                                </div>
-                                                <span className="text-[10px] font-black uppercase tracking-widest text-white/30 truncate">{f}</span>
+                        rounded-full
+
+                        bg-white/[0.06]
+                        border
+                        border-white/[0.08]
+
+                        text-[9px]
+                        uppercase
+
+                        tracking-[0.18em]
+
+                        text-white/70
+                    "
+                                            >
+                                                Popular
                                             </div>
-                                        ))}
+                                        )}
+
                                     </div>
+
+                                    {/* Name */}
+                                    <h3
+                                        className="
+                text-[28px]
+                md:text-[34px]
+
+                font-[720]
+
+                tracking-[-0.08em]
+
+                text-white
+                leading-none
+            "
+                                    >
+                                        {plan.name}
+                                    </h3>
+
+                                    {/* Description */}
+                                    <p
+                                        className="
+                mt-4
+
+                text-[13px]
+                md:text-[14px]
+
+                leading-[1.8]
+
+                text-white/38
+
+                max-w-[280px]
+            "
+                                    >
+                                        {plan.description}
+                                    </p>
+
+                                    {/* Price */}
+                                    <div className="
+            flex
+            items-end
+            gap-2
+
+            mt-8
+        ">
+
+                                        <span
+                                            className="
+                    text-[44px]
+                    md:text-[56px]
+
+                    font-[760]
+
+                    tracking-[-0.10em]
+
+                    leading-none
+
+                    text-white
+                "
+                                        >
+                                            {plan.price}
+                                        </span>
+
+                                        <span
+                                            className="
+                    text-white/25
+                    text-xs
+                    pb-2
+                "
+                                        >
+                                            one-time
+                                        </span>
+
+                                    </div>
+
                                 </div>
 
-                                <button className={cn(
-                                    "w-full py-5 rounded-[24px] font-black text-xs uppercase tracking-[0.3em] overflow-hidden group/btn transition-all duration-500 shadow-xl",
-                                    plan.isPopular ? "bg-white text-black hover:bg-emerald-400" : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
-                                )}>
-                                    Get Started
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+                                {/* Divider */}
+                                <div
+                                    className="
+            relative
+            z-10
 
-                {/* THE BUILD PROCESS */}
-                <section className="py-40 px-6 border-y border-white/5 bg-white/[0.01]">
-                    <div className="max-w-[1200px] mx-auto text-center mb-24">
-                        <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-6 italic uppercase">HOW I WORK.</h2>
-                        <p className="text-white/30 text-xl font-light italic">A clear and simple process from start to finish.</p>
-                    </div>
+            my-8
 
-                    <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-5 gap-4">
-                        {processSteps.map((step, i) => (
-                            <div key={i} className="group p-10 rounded-[40px] bg-white/5 border border-white/5 hover:border-emerald-500/20 transition-all flex flex-col gap-8">
-                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/30 group-hover:bg-emerald-500/10 group-hover:text-emerald-400 transition-all">
-                                    {step.icon}
-                                </div>
-                                <div>
-                                    <h4 className="text-xl font-bold mb-3 italic tracking-tight">{step.title}</h4>
-                                    <p className="text-white/30 text-sm leading-relaxed">{step.desc}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+            h-px
 
-                {/* COMPARISON MATRIX (MINIMAL) */}
-                <section className="py-40 px-6 overflow-x-auto">
-                    <div className="max-w-[1200px] mx-auto">
-                        <div className="mb-20 text-left">
-                            <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-4 italic uppercase">WHAT&apos;S INCLUDED.</h2>
-                            <p className="text-white/40 text-lg italic">Comparing the details across each plan.</p>
-                        </div>
+            bg-gradient-to-r
+            from-transparent
+            via-white/[0.08]
+            to-transparent
+        "
+                                />
 
-                        <div className="w-full min-w-[800px] border border-white/10 rounded-[40px] overflow-hidden bg-white/5 backdrop-blur-3xl">
-                            <table className="w-full border-collapse">
-                                <thead className="bg-white/5 border-b border-white/10">
-                                    <tr>
-                                        <th className="p-8 text-left text-xs font-black uppercase tracking-widest text-white/30">Service Category</th>
-                                        <th className="p-8 text-center text-xs font-black uppercase tracking-widest">Single Page</th>
-                                        <th className="p-8 text-center text-xs font-black uppercase tracking-widest text-emerald-400">Multi Page</th>
-                                        <th className="p-8 text-center text-xs font-black uppercase tracking-widest text-white/30">Full System</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {[
-                                        ["Structure", "1 Page", "Multiple Pages", "Full App Interface"],
-                                        ["Animations", "Core Effects", "Advanced Motion", "Full Custom Motion"],
-                                        ["SEO Work", "Basic Setup", "Advanced Optimization", "Full SEO Strategy"],
-                                        ["Updates", "Manual", "Easy CMS", "Custom Dashboard"],
-                                        ["Security", "SSL + Core", "Advanced Protection", "Enterprise Security"],
-                                        ["Typical Time", "4-6 Days", "1-2 Weeks", "Custom Timeline"]
-                                    ].map((row, i) => (
-                                        <tr key={i} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                                            <td className="p-8 text-sm font-bold text-white/60">{row[0]}</td>
-                                            <td className="p-8 text-center text-xs text-white/30 uppercase">{row[1]}</td>
-                                            <td className="p-8 text-center text-xs text-emerald-400 font-bold uppercase">{row[2]}</td>
-                                            <td className="p-8 text-center text-xs text-white/30 uppercase">{row[3]}</td>
-                                        </tr>
+                                {/* Features */}
+                                <div
+                                    className="
+            relative
+            z-10
+
+            flex
+            flex-col
+            gap-4
+
+            flex-1
+        "
+                                >
+                                    {plan.features.slice(0, 5).map((f) => (
+                                        <div
+                                            key={f}
+                                            className="
+                    flex
+                    items-start
+                    gap-3
+                "
+                                        >
+
+                                            <div
+                                                className="
+                        mt-1
+
+                        w-1.5
+                        h-1.5
+
+                        rounded-full
+
+                        bg-white/40
+
+                        shrink-0
+                    "
+                                            />
+
+                                            <span
+                                                className="
+                        text-[13px]
+                        md:text-[14px]
+
+                        text-white/42
+
+                        leading-relaxed
+                    "
+                                            >
+                                                {f}
+                                            </span>
+
+                                        </div>
                                     ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                {/* HIGH-VALUE DELIVERABLES */}
-                <section className="py-40 px-6">
-                    <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-                        <div>
-                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 italic uppercase leading-none">YOUR <br /><span className="text-emerald-500">ASSETS.</span></h2>
-                            <p className="text-white/30 text-xl font-light italic leading-relaxed mb-12">
-                                You don&apos;t just get a website; you get the design files, clean code, and everything you need to succeed online.
-                            </p>
-                            <div className="grid grid-cols-2 gap-6">
-                                {deliverables.map(d => (
-                                    <div key={d.title} className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/5">
-                                        {d.icon}
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-white/70">{d.title}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="relative group">
-                            <div className="absolute inset-0 bg-emerald-500/20 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                            <div className="relative aspect-square rounded-[60px] bg-neutral-900 border border-white/10 overflow-hidden flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-1000">
-                                <Terminal className="w-40 h-40 text-emerald-500/20" />
-                                <div className="absolute top-10 left-10 p-6 rounded-3xl bg-black/50 backdrop-blur-xl border border-white/10 font-mono text-[10px] text-emerald-400">
-                                    git commit -m "Final Website Launch"
                                 </div>
+
+                                {/* Bottom CTA */}
+<DropdownMenu>
+    <DropdownMenuTrigger asChild>
+        <button
+            className={cn(
+                "group/button relative z-10 mt-8 flex h-[54px] w-full items-center justify-center overflow-hidden rounded-full border border-white/[0.08] bg-white/[0.04] px-5 backdrop-blur-2xl transition-all duration-500 hover:border-white/[0.16] hover:bg-white/[0.06]",
+                plan.isPopular && "bg-white text-black"
+            )}
+        >
+            {/* Shine */}
+            <div className="absolute top-0 left-[-120%] h-full w-[120px] rotate-12 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-1000 group-hover/button:left-[140%]" />
+
+            {/* Ambient Hover */}
+            <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover/button:opacity-100">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            </div>
+
+            {/* Glow */}
+            <div className="absolute inset-0 scale-75 rounded-full bg-white/20 opacity-0 blur-2xl transition-all duration-500 group-hover/button:scale-125 group-hover/button:opacity-100" />
+
+            <span
+                className={cn(
+                    "relative z-10 flex items-center gap-2 text-sm font-semibold tracking-[-0.03em] transition-all duration-500",
+                    plan.isPopular
+                        ? "text-black group-hover/button:text-white"
+                        : "text-white"
+                )}
+            >
+                Start Project
+
+                <ArrowUpRight className="h-4 w-4 transition-all duration-500 group-hover/button:translate-x-1 group-hover/button:-translate-y-1 group-hover/button:rotate-12" />
+            </span>
+
+            {/* Bottom Line */}
+            <span className="absolute bottom-0 left-1/2 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/80 to-transparent transition-all duration-500 group-hover/button:w-[82%]" />
+        </button>
+    </DropdownMenuTrigger>
+
+    <DropdownMenuContent
+        align="center"
+        sideOffset={12}
+        className="w-[92vw] max-w-[360px] overflow-hidden rounded-[30px] border border-white/10 bg-black/90 p-2 shadow-2xl backdrop-blur-3xl"
+    >
+        {/* Header */}
+        <div className="relative overflow-hidden rounded-[24px] border border-white/5 bg-white/[0.03] p-5">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent" />
+
+            <div className="relative z-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/35">
+                    Start Your Project
+                </p>
+
+                <h3 className="mt-3 text-[22px] leading-tight font-[650] tracking-[-0.06em] text-white sm:text-[26px]">
+                    {plan.name}
+                    <span className="block text-white/55 italic font-serif font-light">
+                        {plan.price} package
+                    </span>
+                </h3>
+            </div>
+        </div>
+
+        {/* Contact Buttons */}
+        <div className="mt-2 flex flex-col gap-2">
+            
+            {/* Email */}
+            <a
+                href={`mailto:m.faizurrehman.business@gmail.com?subject=${encodeURIComponent(
+                    `Interested in ${plan.name} Plan`
+                )}&body=${encodeURIComponent(
+                    `Hey Faiz,
+
+I am interested in your "${plan.name}" package (${plan.price}).
+
+Project Details:
+• Brand / Company:
+• Project Type:
+• Deadline:
+• Extra Notes:
+
+Looking forward to working with you.`
+                )}`}
+                className="group/item flex items-center gap-4 rounded-[22px] border border-transparent bg-transparent p-4 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04]"
+            >
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white">
+                    <Mail className="h-5 w-5" />
+                </div>
+
+                <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-white">
+                        Email
+                    </p>
+
+                    <p className="truncate text-xs text-white/40">
+                        Ready-made inquiry template
+                    </p>
+                </div>
+
+                <ArrowUpRight className="h-4 w-4 text-white/30 transition-all duration-300 group-hover/item:translate-x-1 group-hover/item:-translate-y-1 group-hover/item:text-white" />
+            </a>
+
+            {/* WhatsApp */}
+            <a
+                href={`https://wa.me/923260502484?text=${encodeURIComponent(
+                    `Hey Faiz 👋
+
+I am interested in your "${plan.name}" plan (${plan.price}).
+
+Project Details:
+• Brand / Company:
+• Project Type:
+• Deadline:
+• Extra Notes:
+
+Looking forward to working together.`
+                )}`}
+                target="_blank"
+                className="group/item flex items-center gap-4 rounded-[22px] border border-transparent bg-transparent p-4 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04]"
+            >
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white">
+                    <MessageCircle className="h-5 w-5" />
+                </div>
+
+                <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-white">
+                        WhatsApp
+                    </p>
+
+                    <p className="truncate text-xs text-white/40">
+                        Instant project discussion
+                    </p>
+                </div>
+
+                <ArrowUpRight className="h-4 w-4 text-white/30 transition-all duration-300 group-hover/item:translate-x-1 group-hover/item:-translate-y-1 group-hover/item:text-white" />
+            </a>
+
+            {/* Discord */}
+            <button
+                onClick={() => navigator.clipboard.writeText("cryptodeve_")}
+                className="group/item flex items-center gap-4 rounded-[22px] border border-transparent bg-transparent p-4 text-left transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04]"
+            >
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white">
+                    <Disc3 className="h-5 w-5" />
+                </div>
+
+                <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-white">
+                        Discord
+                    </p>
+
+                    <p className="truncate text-xs text-white/40">
+                        Copy username instantly
+                    </p>
+                </div>
+
+                <ArrowUpRight className="h-4 w-4 text-white/30 transition-all duration-300 group-hover/item:translate-x-1 group-hover/item:-translate-y-1 group-hover/item:text-white" />
+            </button>
+        </div>
+    </DropdownMenuContent>
+</DropdownMenu>
+
                             </div>
-                        </div>
+                        ))}
                     </div>
+
                 </section>
 
-                {/* FAQ RE-INTEGRATED */}
-                <section className="py-40 px-6 bg-white/[0.01]">
-                    <div className="max-w-4xl mx-auto">
-                        <motion.h2
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            className="text-4xl md:text-6xl font-black mb-16 tracking-tighter italic uppercase underline decoration-emerald-500 decoration-4"
+                {/* EXPERIENCE STRIP */}
+                <section className="px-6 py-32">
+
+                    <div
+                        className="
+            max-w-7xl
+            mx-auto
+
+            relative
+            overflow-hidden
+
+            rounded-[42px]
+
+            border
+            border-white/[0.08]
+
+            bg-white/[0.02]
+
+            backdrop-blur-3xl
+
+            p-10
+            md:p-20
+        "
+                    >
+
+                        {/* Ambient Glow */}
+                        <div
+                            className="
+                absolute
+                left-1/2
+                top-1/2
+
+                -translate-x-1/2
+                -translate-y-1/2
+
+                w-[500px]
+                h-[500px]
+
+                rounded-full
+
+                blur-3xl
+                opacity-60
+
+                pointer-events-none
+            "
+                            style={{
+                                background: `
+                    radial-gradient(
+                        circle,
+                        rgba(255,255,255,0.08) 0%,
+                        transparent 70%
+                    )
+                `,
+                            }}
+                        />
+
+                        {/* Top Reflection */}
+                        <div
+                            className="
+                absolute
+                top-0
+                left-[10%]
+
+                w-[40%]
+                h-[1px]
+
+                bg-gradient-to-r
+                from-transparent
+                via-white/30
+                to-transparent
+            "
+                        />
+
+                        <div
+                            className="
+                relative
+                z-10
+
+                flex
+                flex-col
+                lg:flex-row
+
+                items-start
+                lg:items-center
+
+                justify-between
+
+                gap-16
+            "
                         >
-                            Common Questions.
-                        </motion.h2>
-                        <div className="space-y-4">
-                            {faqs.map((faq, index) => (
-                                <FAQItem key={index} faq={faq} />
-                            ))}
+
+                            {/* Left */}
+                            <div className="max-w-2xl">
+
+                                <div
+                                    className="
+                        flex
+                        items-center
+                        gap-3
+
+                        mb-8
+                    "
+                                >
+
+                                    <div
+                                        className="
+                            h-1.5
+                            w-1.5
+
+                            rounded-full
+
+                            bg-white/70
+                        "
+                                    />
+
+                                    <span
+                                        className="
+                            uppercase
+
+                            tracking-[0.28em]
+
+                            text-[10px]
+                            font-semibold
+
+                            text-white/35
+                        "
+                                    >
+                                        Creative Development
+                                    </span>
+
+                                </div>
+
+                                <h2
+                                    className="
+                        text-[34px]
+                        sm:text-[52px]
+                        md:text-[72px]
+
+                        leading-[0.92]
+                        tracking-[-0.08em]
+
+                        font-[720]
+
+                        text-white
+                    "
+                                >
+                                    More than just
+                                    <br />
+
+                                    <span
+                                        className="
+                            italic
+                            font-serif
+                            font-light
+
+                            text-white/80
+                        "
+                                    >
+                                        another website.
+                                    </span>
+
+                                </h2>
+
+                            </div>
+
+                            {/* Right */}
+                            <p
+                                className="
+                    max-w-lg
+
+                    text-sm
+                    sm:text-base
+                    md:text-lg
+
+                    leading-[1.9]
+
+                    text-white/40
+                    font-light
+                "
+                            >
+                                Every project is crafted with
+                                cinematic motion, refined interaction,
+                                and modern visual systems designed
+                                to make your brand feel premium,
+                                memorable, and impossible to ignore.
+                            </p>
+
                         </div>
+
                     </div>
+
                 </section>
 
-                {/* FINAL CALL TO ACTION */}
-                <section className="py-60 px-6 text-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-emerald-500/5 blur-[120px] rounded-full" />
-                    <div className="max-w-5xl mx-auto relative z-10">
-                        <h2 className="text-6xl md:text-[180px] font-black mb-16 tracking-tighter italic uppercase leading-none mix-blend-difference">READY TO <br /><span className="text-emerald-500">START?</span></h2>
-                        <button className="group relative px-20 py-10 rounded-full bg-white text-black font-black text-2xl uppercase tracking-[0.3em] overflow-hidden transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)]">
-                            <span className="relative z-10">Contact Me</span>
-                            <div className="absolute inset-0 bg-emerald-400 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                        </button>
-                    </div>
-                </section>
+
 
                 <div className="px-6 pb-20">
                     <div className="max-w-[1200px] mx-auto border-t border-white/10 pt-20">
