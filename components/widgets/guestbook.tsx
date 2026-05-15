@@ -80,17 +80,62 @@ export function Guestbook() {
     }
 
     return (
-        <div className="w-full max-w-md mx-auto">
-            <div className="flex items-center gap-3 mb-6 px-2">
-                <PenTool className="h-4 w-4 text-emerald-400" />
-                <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-white/60">
-                    Sign the Guestbook
-                </h2>
-            </div>
+    <div className="relative w-full max-w-md mx-auto">
 
-            <div className="bg-[#0A0A0A]/30 backdrop-blur-md rounded-2xl border border-white/5 overflow-hidden">
+        {/* Background Glow */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.03] blur-3xl" />
+        </div>
+
+        <div className="relative overflow-hidden rounded-[34px] border border-white/[0.08] bg-[#0B0B0B]/80 backdrop-blur-3xl">
+
+            {/* Reflection */}
+            <div className="absolute left-[10%] top-0 h-px w-[40%] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
+            {/* Noise */}
+            <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+            <div className="relative z-10 p-5 md:p-6">
+
+                {/* Header */}
+                <div className="relative overflow-hidden rounded-[28px] border border-white/[0.06] bg-white/[0.03] p-5">
+
+                    {/* Glow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent" />
+
+                    <div className="relative z-10 flex items-start justify-between gap-4">
+
+                        <div>
+
+                            <div className="flex items-center gap-2">
+                                <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+
+                                <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/35">
+                                    Interactive Wall
+                                </span>
+                            </div>
+
+                            <h2 className="mt-4 text-[34px] font-[720] leading-[0.9] tracking-[-0.09em] text-white">
+                                Guestbook
+                            </h2>
+
+                            <p className="mt-4 max-w-[260px] text-[13px] leading-[1.8] text-white/35">
+                                Thoughts, feedback, and messages from people visiting the portfolio.
+                            </p>
+
+                        </div>
+
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04]">
+                            <PenTool className="h-5 w-5 text-white/70" />
+                        </div>
+
+                    </div>
+
+                </div>
+
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="p-4 border-b border-white/5 space-y-3">
+                <form onSubmit={handleSubmit} className="mt-4 space-y-3">
+
                     <input
                         type="text"
                         placeholder="Your Name"
@@ -98,9 +143,11 @@ export function Guestbook() {
                         onChange={(e) => setName(e.target.value)}
                         disabled={sending}
                         maxLength={20}
-                        className="w-full bg-white/5 border border-white/5 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-white/20 transition-colors disabled:opacity-50"
+                        className="h-[56px] w-full rounded-[22px] border border-white/[0.06] bg-white/[0.03] px-5 text-sm text-white placeholder:text-white/20 outline-none transition-all duration-300 focus:border-white/[0.14] focus:bg-white/[0.05]"
                     />
-                    <div className="flex gap-2">
+
+                    <div className="flex items-center gap-3">
+
                         <input
                             type="text"
                             placeholder="Leave a message..."
@@ -108,57 +155,176 @@ export function Guestbook() {
                             onChange={(e) => setMessage(e.target.value)}
                             disabled={sending}
                             maxLength={100}
-                            className="flex-1 bg-white/5 border border-white/5 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-white/20 transition-colors disabled:opacity-50"
+                            className="h-[56px] flex-1 rounded-[22px] border border-white/[0.06] bg-white/[0.03] px-5 text-sm text-white placeholder:text-white/20 outline-none transition-all duration-300 focus:border-white/[0.14] focus:bg-white/[0.05]"
                         />
+
                         <button
                             type="submit"
                             disabled={!name || !message || sending}
-                            className="px-3 py-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white transition-colors flex items-center justify-center min-w-[44px]"
+                            className="group relative flex h-[56px] w-[56px] shrink-0 items-center justify-center overflow-hidden rounded-[22px] border border-white/[0.08] bg-white/[0.04] transition-all duration-500 hover:border-white/[0.16] hover:bg-white disabled:opacity-40"
                         >
-                            {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                            {/* Shine */}
+                            <div className="absolute top-0 left-[-120%] h-full w-[100px] rotate-12 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-1000 group-hover:left-[140%]" />
+
+                            {sending ? (
+                                <Loader2 className="relative z-10 h-4 w-4 animate-spin text-white group-hover:text-black" />
+                            ) : (
+                                <Send className="relative z-10 h-4 w-4 text-white/70 transition-all duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-black" />
+                            )}
                         </button>
+
                     </div>
+
                 </form>
 
-                {/* List */}
-                <div className="max-h-[300px] overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10">
-                    {loading ? (
-                        <div className="flex justify-center p-4">
-                            <Loader2 className="h-5 w-5 animate-spin text-white/20" />
+                {/* Messages */}
+                <div className="mt-5">
+
+                    <div className="mb-4 flex items-center justify-between px-1">
+
+                        <div className="flex items-center gap-2">
+                            <div className="h-1.5 w-1.5 rounded-full bg-white/30" />
+
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/30">
+                                Recent Messages
+                            </span>
                         </div>
-                    ) : messages.length === 0 ? (
-                        <p className="text-center text-xs text-white/30 py-4">No signatures yet. Be the first!</p>
-                    ) : (
-                        <AnimatePresence initial={false} mode="popLayout">
-                            {messages.map((msg) => (
-                                <motion.div
-                                    key={msg.id}
-                                    initial={{ opacity: 0, y: -20, scale: 0.95 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                    className="flex gap-3 text-sm"
-                                >
-                                    <Avatar className="h-8 w-8 border border-white/10 shrink-0">
-                                        <AvatarFallback className="text-[10px] bg-white/5 text-white/70">
-                                            {getInitials(msg.name)}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex flex-col gap-0.5">
-                                        <div className="flex items-center gap-2">
-                                            <span className="font-semibold text-white/90 text-xs">{msg.name}</span>
-                                            <span className="text-[10px] text-white/30">
-                                                {new Date(msg.created_at).toLocaleDateString()}
-                                            </span>
+
+                        <span className="text-[10px] uppercase tracking-[0.18em] text-white/20">
+                            {messages.length} entries
+                        </span>
+
+                    </div>
+
+                    <div className="max-h-[360px] overflow-y-auto pr-2 space-y-3 custom-scrollbar">
+
+                        {loading ? (
+
+                            <div className="flex justify-center py-10">
+                                <Loader2 className="h-5 w-5 animate-spin text-white/20" />
+                            </div>
+
+                        ) : messages.length === 0 ? (
+
+                            <div className="flex flex-col items-center justify-center rounded-[26px] border border-white/[0.06] bg-white/[0.02] py-14 text-center">
+
+                                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03]">
+                                    <PenTool className="h-5 w-5 text-white/25" />
+                                </div>
+
+                                <p className="mt-5 text-sm text-white/40">
+                                    No messages yet
+                                </p>
+
+                                <p className="mt-1 text-xs text-white/20">
+                                    Be the first to leave something here.
+                                </p>
+
+                            </div>
+
+                        ) : (
+
+                            <AnimatePresence initial={false} mode="popLayout">
+
+                                {messages.map((msg) => (
+
+                                    <motion.div
+                                        key={msg.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        transition={{ duration: 0.4, ease: "easeOut" }}
+                                        className="group relative overflow-hidden rounded-[28px] border border-white/[0.06] bg-white/[0.025] pl-5 pr-4 py-4 transition-all duration-500 hover:border-white/[0.12] hover:bg-white/[0.04]"
+                                    >
+                                        {/* Hover Glow */}
+                                        <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent" />
                                         </div>
-                                        <p className="text-white/60 leading-relaxed font-light text-sm break-all">{msg.message}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                    )}
+
+                                        <div className="relative z-10">
+
+                                            {/* Top */}
+                                            <div className="flex items-center justify-between gap-3">
+
+                                                <div className="flex items-center gap-3">
+
+                                                    <Avatar className="h-11 w-11 shrink-0 border border-white/[0.08]">
+                                                        <AvatarFallback className="bg-white/[0.04] text-[11px] font-semibold text-white/70">
+                                                            {getInitials(msg.name)}
+                                                        </AvatarFallback>
+                                                    </Avatar>
+
+                                                    <div>
+
+                                                        <div className="flex items-center gap-2">
+
+                                                            <span className="text-[13px] font-semibold text-white/90">
+                                                                {msg.name}
+                                                            </span>
+
+                                                            <div className="h-1 w-1 rounded-full bg-white/20" />
+
+                                                            <span className="text-[10px] uppercase tracking-[0.14em] text-white/25">
+                                                                Active
+                                                            </span>
+
+                                                        </div>
+
+                                                        <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-white/20">
+                                                            {new Date(msg.created_at).toLocaleDateString()}
+                                                        </p>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div className="h-2 w-2 rounded-full bg-emerald-400/70" />
+
+                                            </div>
+
+                                            {/* Message */}
+                                            <p className="mt-5 text-[14px] leading-[1.9] text-white/55 transition-colors duration-300 group-hover:text-white/72">
+                                                {msg.message}
+                                            </p>
+
+                                        </div>
+
+                                    </motion.div>
+
+                                ))}
+
+                            </AnimatePresence>
+
+                        )}
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
-    );
+
+        {/* Custom Scrollbar */}
+        <style jsx>{`
+            .custom-scrollbar::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: rgba(255,255,255,0.08);
+                border-radius: 999px;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: rgba(255,255,255,0.14);
+            }
+        `}</style>
+
+    </div>
+);
 }
