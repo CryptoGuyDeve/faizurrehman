@@ -30,7 +30,7 @@ const plans = [
     {
         id: "starter",
         name: "Single Page",
-        price: "$36",
+        price: "$72",
         description: "Perfect for early-stage founders who need a clean, fast, and professional web presence.",
         features: [
             "1 High-Converting Landing Page",
@@ -47,7 +47,7 @@ const plans = [
     {
         id: "studio",
         name: "Multi Page",
-        price: "$72",
+        price: "$143",
         description: "For brands serious about standing out with premium design, smooth interactions, and conversion-focused structure.",
         features: [
             "Multi-Section Premium Landing Page",
@@ -66,7 +66,7 @@ const plans = [
     {
         id: "scale",
         name: "Full System",
-        price: "$110",
+        price: "$251",
         description: "Built for serious businesses that need full-scale systems, advanced features, and long-term scalability.",
         features: [
             "Full Website / SaaS Interface Build",
